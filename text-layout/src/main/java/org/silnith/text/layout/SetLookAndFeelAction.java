@@ -2,8 +2,6 @@ package org.silnith.text.layout;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -30,8 +28,8 @@ public class SetLookAndFeelAction extends AbstractAction {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 
-			final Logger logger = System.getLogger(SetLookAndFeelAction.class.getName());
-			logger.log(Level.ERROR, "Failed.", e);
+			final System.Logger logger = System.getLogger(SetLookAndFeelAction.class.getName());
+			logger.log(System.Logger.Level.ERROR, "Failed.", e);
 
 			return;
 		}
