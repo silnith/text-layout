@@ -58,12 +58,12 @@ public final class CustomTextPanel extends JPanel implements Scrollable {
 
 	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-		return 0;
+		return 10;
 	}
 
 	@Override
 	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-		return 0;
+		return 100;
 	}
 
 	@Override
