@@ -1,4 +1,4 @@
-package org.silnith.text.layout;
+package org.silnith.text.layout.ui.factory;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
+import org.silnith.text.layout.action.factory.ActionFactory;
 
 public class FrameFactory {
 

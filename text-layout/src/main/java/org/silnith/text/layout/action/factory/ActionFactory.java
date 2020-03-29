@@ -1,4 +1,4 @@
-package org.silnith.text.layout;
+package org.silnith.text.layout.action.factory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -8,6 +8,12 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
 
+import org.silnith.text.layout.action.NewWindowAction;
+import org.silnith.text.layout.ui.factory.FrameFactory;
+
+/**
+ * Vends the various UI actions.
+ */
 public class ActionFactory {
 
 	private final Action exitAction;

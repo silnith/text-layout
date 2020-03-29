@@ -1,4 +1,4 @@
-package org.silnith.text.layout;
+package org.silnith.text.layout.action;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -9,6 +9,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+/**
+ * Sets the look & feel for the entire application.
+ */
 public class SetLookAndFeelAction extends AbstractAction {
 
 	private static final long serialVersionUID = -2878965383715117528L;

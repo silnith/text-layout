@@ -1,10 +1,13 @@
-package org.silnith.text.layout;
+package org.silnith.text.layout.action;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+
+import org.silnith.text.layout.ui.factory.FrameFactory;
+import org.silnith.text.layout.ui.worker.FrameCreationWorker;
 
 public final class NewWindowAction extends AbstractAction {
 	

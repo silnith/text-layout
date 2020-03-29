@@ -1,4 +1,4 @@
-package org.silnith.text.layout;
+package org.silnith.text.layout.ui.factory;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -15,6 +15,9 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
+import org.silnith.text.layout.Example;
+import org.silnith.text.layout.ui.CustomTextPanel;
+
 public class ContentPanelFactory {
 
 	private final Image image;
@@ -27,8 +30,8 @@ public class ContentPanelFactory {
 	public JComponent getContentPanel() {
 		return new CustomTextPanel(createAttributedString());
 	}
-
-	private AttributedString createAttributedString() {
+	
+	public AttributedString createAttributedString() {
 			final Map<AttributedCharacterIterator.Attribute, Object> attributes = new HashMap<AttributedCharacterIterator.Attribute, Object>();
 			attributes.put(AttributedCharacterIterator.Attribute.LANGUAGE, Locale.ENGLISH);
 	//		attributes.put(AttributedCharacterIterator.Attribute.READING, new Annotation("This is a test."));

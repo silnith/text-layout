@@ -1,4 +1,4 @@
-package org.silnith.text.layout;
+package org.silnith.text.layout.ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,6 +25,9 @@ import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
 
+/**
+ * A custom panel that renders styled flowed text.
+ */
 public final class CustomTextPanel extends JPanel implements Scrollable {
 	
 	private final AttributedString content;
