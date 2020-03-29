@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * Sets the look & feel for the entire application.
+ * Sets the look &amp; feel for the entire application.
  */
 public class SetLookAndFeelAction extends AbstractAction {
 

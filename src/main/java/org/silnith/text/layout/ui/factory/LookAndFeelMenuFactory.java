@@ -12,7 +12,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import org.silnith.text.layout.action.SetLookAndFeelAction;
 
 /**
- * Vends a menu for setting the application look & feel.
+ * Vends a menu for setting the application look &amp; feel.
  */
 public class LookAndFeelMenuFactory {
 
