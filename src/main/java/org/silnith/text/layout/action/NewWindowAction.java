@@ -9,20 +9,27 @@ import javax.swing.SwingWorker;
 import org.silnith.text.layout.ui.factory.FrameFactory;
 import org.silnith.text.layout.ui.worker.FrameCreationWorker;
 
-public final class NewWindowAction extends AbstractAction {
-	
-	private final FrameFactory frameFactory;
-	
-	public NewWindowAction(final String name, final FrameFactory frameFactory) {
-		super(name);
-		this.frameFactory = frameFactory;
-	}
+/**
+ * An action to create a new window.
+ */
+public class NewWindowAction extends AbstractAction {
 
-	@Override
-	public void actionPerformed(final ActionEvent e) {
-		assert SwingUtilities.isEventDispatchThread();
-		
-		final SwingWorker<?, ?> worker = new FrameCreationWorker(frameFactory);
-		worker.execute();
-	}
+    private final FrameFactory frameFactory;
+
+    public NewWindowAction(final String name, final FrameFactory frameFactory) {
+        super(name);
+        if (frameFactory == null) {
+            throw new IllegalArgumentException("Frame factory is null.");
+        }
+        this.frameFactory = frameFactory;
+    }
+
+    @Override
+    public void actionPerformed(final ActionEvent e) {
+        assert SwingUtilities.isEventDispatchThread();
+
+        final SwingWorker<?, ?> worker = new FrameCreationWorker(frameFactory);
+        worker.execute();
+    }
+
 }

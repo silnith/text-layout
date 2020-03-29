@@ -10,35 +10,41 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * Sets the look &amp; feel for the entire application.
+ * Sets the Look &amp; Feel for the entire application.
  */
 public class SetLookAndFeelAction extends AbstractAction {
 
-	private static final long serialVersionUID = -2878965383715117528L;
+    private static final long serialVersionUID = -2878965383715117528L;
 
-	private final String className;
+    private final String className;
 
-	public SetLookAndFeelAction(final String name, final String className) {
-		super(name);
-		this.className = className;
-	}
+    public SetLookAndFeelAction(final String name, final String className) {
+        super(name);
+        if (className == null) {
+            throw new IllegalArgumentException("Class name is null.");
+        }
+        this.className = className;
+    }
 
-	@Override
-	public void actionPerformed(final ActionEvent actionEvent) {
-		try {
-			UIManager.setLookAndFeel(className);
-		} catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
+    @Override
+    public void actionPerformed(final ActionEvent actionEvent) {
+        assert SwingUtilities.isEventDispatchThread();
 
-			final System.Logger logger = System.getLogger(SetLookAndFeelAction.class.getName());
-			logger.log(System.Logger.Level.ERROR, "Failed.", e);
+        try {
+            UIManager.setLookAndFeel(className);
+        } catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
 
-			return;
-		}
+            final System.Logger logger = System.getLogger(SetLookAndFeelAction.class.getName());
+            logger.log(System.Logger.Level.ERROR, "Failed.", e);
 
-		for (final Frame frame : JFrame.getFrames()) {
-			SwingUtilities.updateComponentTreeUI(frame);
-		}
-	}
+            return;
+        }
+
+        for (final Frame frame : JFrame.getFrames()) {
+            SwingUtilities.updateComponentTreeUI(frame);
+        }
+    }
+
 }

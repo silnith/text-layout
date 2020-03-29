@@ -28,120 +28,134 @@ import javax.swing.Scrollable;
 /**
  * A custom panel that renders styled flowed text.
  */
-public final class CustomTextPanel extends JPanel implements Scrollable {
-	
-	private final AttributedString content;
-	private List<TextLayout> layouts;
-	private final Map<RenderingHints.Key, Object> renderingHints;
+public class CustomTextPanel extends JPanel implements Scrollable {
 
-	public CustomTextPanel(final AttributedString content) {
-		super(true);
-		this.content = content;
-		this.layouts = Collections.emptyList();
-		
-		this.renderingHints = new HashMap<RenderingHints.Key, Object>();
-		this.renderingHints.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-		this.renderingHints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		this.renderingHints.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-		this.renderingHints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
-		this.renderingHints.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-		this.renderingHints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		this.renderingHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		this.renderingHints.put(RenderingHints.KEY_RESOLUTION_VARIANT, RenderingHints.VALUE_RESOLUTION_VARIANT_SIZE_FIT);
-		this.renderingHints.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_DEFAULT);
-		this.renderingHints.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		
-		this.setPreferredSize(new Dimension(320, 1024));
-	}
+    private final AttributedString content;
 
-	@Override
-	public Dimension getPreferredScrollableViewportSize() {
-		return getPreferredSize();
-	}
+    private List<TextLayout> layouts;
 
-	@Override
-	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-		return 10;
-	}
+    private final Map<RenderingHints.Key, Object> renderingHints;
 
-	@Override
-	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-		return 100;
-	}
+    public CustomTextPanel(final AttributedString content) {
+        super(true);
+        if (content == null) {
+            throw new IllegalArgumentException("Content is null.");
+        }
+        this.content = content;
+        this.layouts = Collections.emptyList();
 
-	@Override
-	public boolean getScrollableTracksViewportWidth() {
-		return true;
-	}
+        this.renderingHints = new HashMap<RenderingHints.Key, Object>();
+        this.renderingHints.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        this.renderingHints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        this.renderingHints.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        this.renderingHints.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
+        this.renderingHints.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        this.renderingHints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        this.renderingHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        this.renderingHints.put(RenderingHints.KEY_RESOLUTION_VARIANT, RenderingHints.VALUE_RESOLUTION_VARIANT_SIZE_FIT);
+        this.renderingHints.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_DEFAULT);
+        this.renderingHints.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-	@Override
-	public boolean getScrollableTracksViewportHeight() {
-		return false;
-	}
+        this.setPreferredSize(new Dimension(640, 1024));
+    }
 
-	@Override
-	protected void paintComponent(final Graphics g) {
-		super.paintComponent(g);
-		
-		final Graphics2D g2 = getGraphics2D(g);
-		
-		g2.addRenderingHints(renderingHints);
-		
-		float x = 0;
-		float y = 0;
-		for (final TextLayout textLayout : layouts) {
-			y += textLayout.getAscent();
-			if (textLayout.isLeftToRight()) {
-				textLayout.draw(g2, 0, y);
-			} else {
-				textLayout.draw(g2, 320 - textLayout.getAdvance(), y);
-			}
-			y += textLayout.getDescent();
-			y += textLayout.getLeading();
-		}
-	}
-	
-	private Graphics2D getGraphics2D(final Graphics g) {
-		final Graphics2D g2 = Graphics2D.class.cast(g.create());
-		final GraphicsConfiguration deviceConfiguration = g2.getDeviceConfiguration();
-		final AffineTransform normalizingTransform = deviceConfiguration.getNormalizingTransform();
-		g2.transform(normalizingTransform);
-		return g2;
-	}
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return getPreferredSize();
+    }
 
-	@Override
-	public void doLayout() {
-		final AttributedCharacterIterator iterator = content.getIterator();
-		final BreakIterator lineInstance = BreakIterator.getLineInstance(Locale.ENGLISH);
-		final Graphics2D g2 = getGraphics2D(getGraphics());
-		final FontRenderContext frc = g2.getFontRenderContext();
-		final LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(iterator, lineInstance, frc);
-		
-		lineBreakMeasurer.setPosition(iterator.getBeginIndex());
-		
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return 10;
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return 100;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return true;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+        return false;
+    }
+
+    @Override
+    protected void paintComponent(final Graphics g) {
+        super.paintComponent(g);
+
+        final Graphics2D g2 = getGraphics2D(g);
+
+        g2.addRenderingHints(renderingHints);
+
+        float x = 0;
+        float y = 0;
+        for (final TextLayout textLayout : layouts) {
+            y += textLayout.getAscent();
+            if (textLayout.isLeftToRight()) {
+                textLayout.draw(g2, 0, y);
+            } else {
+                textLayout.draw(g2, 320 - textLayout.getAdvance(), y);
+            }
+            y += textLayout.getDescent();
+            y += textLayout.getLeading();
+        }
+    }
+
+    private Graphics2D getGraphics2D(final Graphics g) {
+        final Graphics2D g2 = Graphics2D.class.cast(g.create());
+        final GraphicsConfiguration deviceConfiguration = g2.getDeviceConfiguration();
+        final AffineTransform normalizingTransform = deviceConfiguration.getNormalizingTransform();
+        g2.transform(normalizingTransform);
+        return g2;
+    }
+
+    @Override
+    public void doLayout() {
+        // TODO: Get Locale of the rendered content.
+        final AttributedCharacterIterator iterator = content.getIterator();
+        final BreakIterator lineInstance = BreakIterator.getLineInstance(Locale.ENGLISH);
+        final Graphics2D g2 = getGraphics2D(getGraphics());
+        final FontRenderContext frc = g2.getFontRenderContext();
+        final LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(iterator, lineInstance, frc);
+
+        lineBreakMeasurer.setPosition(iterator.getBeginIndex());
+
 //		final float wrappingWidth = getWidth();
-		final GraphicsConfiguration deviceConfiguration = g2.getDeviceConfiguration();
-		final AffineTransform normalizingTransform = deviceConfiguration.getNormalizingTransform();
-		final float wrappingWidth;
-		try {
-			final Point2D inverseTransform = normalizingTransform.inverseTransform(new Point2D.Float(getWidth(), getHeight()), null);
-			wrappingWidth = (float) inverseTransform.getX();
-		} catch (NoninvertibleTransformException e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		final List<TextLayout> layouts = new ArrayList<TextLayout>();
-		while (lineBreakMeasurer.getPosition() < iterator.getEndIndex()) {
-			final TextLayout nextLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
-			
-			assert nextLayout != null;
-			
-			layouts.add(nextLayout);
-		}
-		
-		this.layouts = layouts;
-		
-		super.doLayout();
-	}
+        final GraphicsConfiguration deviceConfiguration = g2.getDeviceConfiguration();
+        final AffineTransform normalizingTransform = deviceConfiguration.getNormalizingTransform();
+        final float wrappingWidth;
+        try {
+            final Point2D inverseTransform = normalizingTransform.inverseTransform(new Point2D.Float(getWidth(), getHeight()), null);
+            wrappingWidth = (float) inverseTransform.getX();
+        } catch (final NoninvertibleTransformException e) {
+            e.printStackTrace();
+
+            final System.Logger logger = System.getLogger(CustomTextPanel.class.getName());
+            logger.log(System.Logger.Level.ERROR, "Failed.", e);
+
+            return;
+        }
+
+        final List<TextLayout> layouts = new ArrayList<TextLayout>();
+        while (lineBreakMeasurer.getPosition() < iterator.getEndIndex()) {
+            /*
+             * Make sure width is positive in case the window hasn't been made visible yet.
+             */
+            final TextLayout nextLayout = lineBreakMeasurer.nextLayout(Math.max(wrappingWidth, 1.0f));
+
+            assert nextLayout != null;
+
+            layouts.add(nextLayout);
+        }
+
+        this.layouts = layouts;
+
+        super.doLayout();
+    }
+
 }
