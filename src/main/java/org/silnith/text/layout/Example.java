@@ -10,6 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.silnith.text.layout.action.factory.ActionFactory;
 import org.silnith.text.layout.ui.factory.ContentPanelFactory;
+import org.silnith.text.layout.ui.factory.FontFactory;
 import org.silnith.text.layout.ui.factory.FrameFactory;
 import org.silnith.text.layout.ui.factory.LookAndFeelMenuFactory;
 import org.silnith.text.layout.ui.factory.TabFactory;
@@ -37,9 +38,10 @@ public class Example {
 
         final ActionFactory actionFactory = new ActionFactory();
         final ContentPanelFactory contentPanelFactory = new ContentPanelFactory();
-        final TabFactory tabFactory = new TabFactory(contentPanelFactory);
+        final FontFactory fontFactory = new FontFactory();
+        final TabFactory tabFactory = new TabFactory(contentPanelFactory, fontFactory);
         final LookAndFeelMenuFactory lookAndFeelMenuFactory = new LookAndFeelMenuFactory();
-        final FrameFactory frameFactory = new FrameFactory(actionFactory, tabFactory, lookAndFeelMenuFactory);
+        final FrameFactory frameFactory = new FrameFactory(actionFactory, tabFactory, lookAndFeelMenuFactory, fontFactory);
 
         final Action newWindowAction = actionFactory.getNewWindowAction(frameFactory);
         SwingUtilities.invokeAndWait(new ActionInvoker(newWindowAction));

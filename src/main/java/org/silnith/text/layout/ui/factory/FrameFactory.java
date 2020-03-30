@@ -26,11 +26,13 @@ public class FrameFactory {
     private final TabFactory tabFactory;
 
     private final LookAndFeelMenuFactory lookAndFeelMenuFactory;
+    
+    private final FontFactory fontFactory;
 
     private Dimension preferredSize;
 
     public FrameFactory(final ActionFactory actionFactory, final TabFactory tabFactory,
-            final LookAndFeelMenuFactory lookAndFeelMenuFactory) {
+            final LookAndFeelMenuFactory lookAndFeelMenuFactory, final FontFactory fontFactory) {
         super();
         if (actionFactory == null) {
             throw new IllegalArgumentException("Action factory is null.");
@@ -41,15 +43,20 @@ public class FrameFactory {
         if (lookAndFeelMenuFactory == null) {
             throw new IllegalArgumentException("Look & Feel factory is null.");
         }
+        if (fontFactory == null) {
+            throw new IllegalArgumentException("Font factory is null.");
+        }
         this.actionFactory = actionFactory;
         this.tabFactory = tabFactory;
         this.lookAndFeelMenuFactory = lookAndFeelMenuFactory;
+        this.fontFactory = fontFactory;
         preferredSize = new Dimension(800, 600);
     }
 
     public JFrame getFrame() {
         final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         tabbedPane.setPreferredSize(preferredSize);
+        tabbedPane.setFont(fontFactory.getDialogFont());
 
         final Action newTabAction = actionFactory.getNewTabAction(tabFactory, tabbedPane);
 
