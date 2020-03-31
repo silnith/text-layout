@@ -21,9 +21,16 @@ import org.silnith.text.layout.ui.factory.TabFactory;
 public class ActionFactory {
 
     private final Action exitAction;
+    private int acceleratorMask;
 
     public ActionFactory() {
         super();
+        
+        if (System.getProperty("os.name").contains("Mac")) {
+            acceleratorMask = InputEvent.META_DOWN_MASK;
+        } else {
+            acceleratorMask = InputEvent.CTRL_DOWN_MASK;
+        }
 
         exitAction = new AbstractAction("Exit") {
 
@@ -43,21 +50,21 @@ public class ActionFactory {
 
     public Action getNewWindowAction(final FrameFactory frameFactory) {
         final Action action = new NewWindowAction("New Window", frameFactory);
-        action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+        action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, acceleratorMask));
         action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_N);
         return action;
     }
 
     public Action getNewTabAction(final TabFactory tabFactory, final JTabbedPane tabbedPane) {
         final Action action = new NewTabAction("New Tab", tabFactory, tabbedPane);
-        action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK));
+        action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_T, acceleratorMask));
         action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_T);
         return action;
     }
 
     public Action getCloseTabAction(final JTabbedPane tabbedPane) {
         final Action action = new CloseTabAction("Close Tab", tabbedPane);
-        action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
+        action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_W, acceleratorMask));
         action.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
         return action;
     }
