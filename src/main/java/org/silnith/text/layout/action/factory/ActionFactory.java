@@ -26,7 +26,7 @@ public class ActionFactory {
     public ActionFactory() {
         super();
         
-        if (System.getProperty("os.name").contains("Mac")) {
+        if (System.getProperty("os.name").equals("Mac OS X")) {
             acceleratorMask = InputEvent.META_DOWN_MASK;
         } else {
             acceleratorMask = InputEvent.CTRL_DOWN_MASK;
